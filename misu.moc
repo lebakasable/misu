@@ -7,7 +7,7 @@ impl:
     width height width height * malloc::<u64> cast(Misu)
   }
 
-  fn Misu.fill(Misu: self u64: color) {
+  fn Misu.clear(Misu: self u64: color) {
     color self::pixels memset
   }
 

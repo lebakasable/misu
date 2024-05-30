@@ -8,7 +8,7 @@ fn checker_example(Misu: misu) {
   misu::width  cols / as [cell_width]
   misu::height rows / as [cell_height]
 
-  misu COLOR_BLACK Misu.fill
+  misu COLOR_BLACK Misu.clear
 
   0 while dup rows < do {
     as [y]
@@ -32,7 +32,7 @@ fn checker_example(Misu: misu) {
 }
 
 fn circle_example(Misu: misu) {
-  misu COLOR_BLACK Misu.fill
+  misu COLOR_BLACK Misu.clear
 
   misu misu::width 2 / misu::height 2 / 100 COLOR_WHITE Misu.fill_circle
 
