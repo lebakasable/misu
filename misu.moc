@@ -1,0 +1,62 @@
+struct Misu {
+  pub u64: width
+  pub u64: height
+  pub Arr<u64>: pixels
+impl:
+  fn Misu.new(u64: width u64: height) -> [Misu] {
+    width height width height * malloc::<u64> cast(Misu)
+  }
+
+  fn Misu.fill(Misu: self u64: color) {
+    color self::pixels memset
+  }
+
+  fn Misu.fill_rect(Misu: self u64: x0 u64: y0 u64: w u64: h u64: color) {
+    0 while dup h < do {
+      dup y0 + as [y]
+      0 y <= y self::height < land if {
+        0 while dup w < do {
+          dup x0 + as [x]
+          0 x <= x self::width < land if {
+            color y self::width * x + self::pixels Arr.set
+          }
+          1 +
+        } drop
+      }
+      1 +
+    } drop
+  }
+
+  fn Misu.save(Misu: self Str: path) {
+    438 577 path File.open as [out]
+    out::fd 0 < if {
+      "Error: Could not save pixels to file " print path println
+      1 exit
+    }
+
+    "P3\n"       String.new
+    self::width  fmt
+    " "          fmt
+    self::height fmt
+    " 255\n"     fmt
+
+    0 while dup self::width self::height * < do {
+      dup self::pixels Arr.get as [pixel]
+
+      swap
+      pixel 0xFF & fmt
+      " " fmt
+      pixel 8u8 >> 0xFF & fmt
+      " " fmt
+      pixel 16u8 >> 0xFF & fmt
+      " " fmt
+      swap
+
+      1 +
+    } drop
+
+    out::fd write
+
+    out File.close
+  }
+}
