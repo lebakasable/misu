@@ -27,6 +27,24 @@ impl:
     } drop
   }
 
+  fn Misu.fill_circle(Misu: self u64: cx u64: cy u64: r u64: color) {
+    cy r - while dup cy r + <= do {
+      as [y]
+      0 y <= y self::height < land if {
+        cx r - while dup cx r + <= do {
+          as [x]
+          0 x <= x self::width < land if {
+            x cx - dup * y cy - dup * + r r * <= if {
+              color y self::width * x + self::pixels Arr.set
+            }
+          }
+          x 1 +
+        } drop
+      }
+      y 1 +
+    } drop
+  }
+
   fn Misu.save(Misu: self Str: path) {
     438 577 path File.open as [out]
     out::fd 0 < if {

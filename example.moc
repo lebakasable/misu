@@ -1,16 +1,14 @@
 include "misu.moc"
 
-fn main() {
-  700 600       as [width height]
-  7   6         as [cols rows]
-  width cols /  as [cell_width]
-  height rows / as [cell_height]
-  0x2e1e1e      as [black_color]
-  0xf4d6cd      as [white_color]
+inline fn COLOR_BLACK() -> [u64] 0x2e1e1e
+inline fn COLOR_WHITE() -> [u64] 0xf4d6cd
 
-  width height Misu.new as [misu]
+fn checker_example(Misu: misu) {
+  7 6 as [cols rows]
+  misu::width  cols / as [cell_width]
+  misu::height rows / as [cell_height]
 
-  misu black_color Misu.fill
+  misu COLOR_BLACK Misu.fill
 
   0 while dup rows < do {
     as [y]
@@ -18,9 +16,9 @@ fn main() {
       as [x]
 
       x y + 2 % 0 == if {
-        black_color
+        COLOR_BLACK
       } else {
-        white_color
+        COLOR_WHITE
       }
       as [color]
 
@@ -30,5 +28,20 @@ fn main() {
     y 1 +
   } drop
 
-  misu "output.ppm" Misu.save
+  misu "checker.ppm" Misu.save
+}
+
+fn circle_example(Misu: misu) {
+  misu COLOR_BLACK Misu.fill
+
+  misu misu::width 2 / misu::height 2 / 100 COLOR_WHITE Misu.fill_circle
+
+  misu "circle.ppm" Misu.save
+}
+
+fn main() {
+  700 600 as [width height]
+
+  width height Misu.new as [misu]
+  misu circle_example
 }
